@@ -1,0 +1,53 @@
+import time
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Data transaksi yang sudah ada
+data_transaksi = [
+    {"Kode Transaksi": 1023, "Nama Pelanggan": "Andi", "Posisi Driving": "A1", "Tanggal Transaksi": "2024-12-01", "Total Biaya": 500000},
+    {"Kode Transaksi": 3045, "Nama Pelanggan": "Budi", "Posisi Driving": "B2", "Tanggal Transaksi": "2024-12-02", "Total Biaya": 750000},
+    {"Kode Transaksi": 2034, "Nama Pelanggan": "Citra", "Posisi Driving": "A3", "Tanggal Transaksi": "2024-12-03", "Total Biaya": 600000},
+    {"Kode Transaksi": 4056, "Nama Pelanggan": "Diana", "Posisi Driving": "B1", "Tanggal Transaksi": "2024-12-04", "Total Biaya": 850000},
+]
+
+# Membuat DataFrame
+df = pd.DataFrame(data_transaksi)
+
+# Fungsi Rekursif untuk menghitung total biaya
+def total_biaya_rekursif(data, n):
+    if n == 0:
+        return 0
+    return data.iloc[n-1]['Total Biaya'] + total_biaya_rekursif(data, n-1
+# Fungsi Iteratif untuk menghitung total biaya
+def total_biaya_iteratif(data):
+    total = 0
+    for i in range(len(data)):
+        total += data.iloc[i]['Total Biaya']
+    return total
+
+# Mengukur waktu eksekusi untuk iteratif vs rekursif
+iteratif_times = []
+rekursif_times = []
+n_values = list(range(1, len(df)+1))  # Dari 1 hingga jumlah data transaksi
+
+for n in n_values:
+    # Mengukur waktu untuk algoritma iteratif
+    start = time.perf_counter()
+    total_biaya_iteratif(df.iloc[:n])  # Mengambil data hingga transaksi ke-n
+    iteratif_times.append(time.perf_counter() - start)
+    
+    # Mengukur waktu untuk algoritma rekursif
+    start = time.perf_counter()
+    total_biaya_rekursif(df.iloc[:n], n)  # Mengambil data hingga transaksi ke-n
+    rekursif_times.append(time.perf_counter() - start)
+
+# Membuat diagram garis perbandingan
+plt.plot(n_values, iteratif_times, label='Iteratif', color='blue')
+plt.plot(n_values, rekursif_times, label='Rekursif', color='red')
+
+plt.xlabel('Jumlah Transaksi (n)')
+plt.ylabel('Waktu Eksekusi (detik)')
+plt.title('Perbandingan Waktu Eksekusi: Iteratif vs Rekursif')
+plt.legend()
+plt.grid(True)
+plt.show()
