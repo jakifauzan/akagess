@@ -17,7 +17,7 @@ df = pd.DataFrame(data_transaksi)
 def total_biaya_rekursif(data, n):
     if n == 0:
         return 0
-    return data.iloc[n-1]['Total Biaya'] + total_biaya_rekursif(data, n-1
+    return data.iloc[n-1]['Total Biaya'] + total_biaya_rekursif(data, n-1)
 # Fungsi Iteratif untuk menghitung total biaya
 def total_biaya_iteratif(data):
     total = 0
